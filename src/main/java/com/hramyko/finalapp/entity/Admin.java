@@ -6,7 +6,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "admins")
-@DiscriminatorValue("ADMIN")
 public class Admin extends User {
-
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", createdAt=" + createdAt +
+                ", role=" + role +
+                '}';
+    }
 }

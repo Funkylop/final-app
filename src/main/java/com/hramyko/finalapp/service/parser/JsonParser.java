@@ -39,8 +39,12 @@ public class JsonParser {
         switch(name) {
             case "com.hramyko.finalapp.entity.Post":
                 return new Post();
-            case "com.hramyko.finalapp.entity.User":
-                return new User();
+            case "com.hramyko.finalapp.entity.CommonUser":
+                return new CommonUser();
+            case "com.hramyko.finalapp.entity.Admin" :
+                return new Admin();
+            case "com.hramyko.finalapp.entity.Trader" :
+                return new Trader();
             case "com.hramyko.finalapp.entity.GameObject":
                 return new GameObject();
             case "com.hramyko.finalapp.entity.Comment":

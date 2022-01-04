@@ -8,19 +8,16 @@ import java.util.Map;
 
 public interface UserService {
     String findAll();
-//    User findUserById(int id);
-//    User saveUser(User user);
-//    User updateUser(User user);
-//    void destroyUser(int id);
+    User findUserById(int id);
+    User saveUser(User user);
+    String updateUser(User user);
+    void destroyUser(int id);
     User findUserByEmail(String email);
 
     String findAllTraders();
 
-    //    void updateUserStatus(int id, String status);
-//    void updateUserRole(int id, String role);
-//    List<User> findAllTraders();
+    String updateUserStatus(String email, String status);
+    String updateUserRole(int id, String role);
     User currentUser();
-//    User updateUser(int idUser, User user);
-//    double getUserRating(int id);
-//    Map<User, Double> getTopTraders();
+    String updateUserPassword(int idUser, User user);
 }

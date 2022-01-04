@@ -1,10 +1,12 @@
 package com.hramyko.finalapp.service.impl;
 
+import com.hramyko.finalapp.entity.Status;
 import com.hramyko.finalapp.entity.Trader;
 import com.hramyko.finalapp.entity.User;
 import com.hramyko.finalapp.repository.TraderRepository;
 import com.hramyko.finalapp.repository.UserRepository;
 import com.hramyko.finalapp.service.UserService;
+import com.hramyko.finalapp.service.parser.JsonParser;
 import com.hramyko.finalapp.service.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -42,70 +44,86 @@ public class UserServiceImpl implements UserService {
         return traders.get(0).getGameObjects().toString();
     }
 
-//
-//    @Override
-//    public User findUserById(int id) {
-//        userValidator.validateId(id);
-//        return userDao.findUserById(id);
-//    }
-//
-//    @Override
-//    public User saveUser(User user) {
-//        userValidator.validate(user);
-//        user = userDao.saveUser(user);
-//        return user;
-//    }
-//
-//    @Override
-//    public User updateUser(int idUser, User user) {
-//        if (user.getPassword() != null) {
-//            userValidator.validatePassword(user.getPassword());
-//        }
-//        return userDao.updateUser(idUser, user);
-//    }
-//
-//    @Override
-//    public User updateUser(User user) {
-//        int id = currentUser().getId();
-//        userValidator.validateId(id);
-//        if (user.getPassword() != null) {
-//            userValidator.validatePassword(user.getPassword());
-//        }
-//        if (user.getFirstName() != null) {
-//            userValidator.validateName(user.getFirstName());
-//        }
-//        if (user.getLastName() != null) {
-//            userValidator.validateName(user.getLastName());
-//        }
-//        return userDao.updateUser(id, user);
-//    }
-//
-//    @Override
-//    public void destroyUser(int id) {
-//        userValidator.validateId(id);
-//        userDao.destroyUser(id);
-//    }
-//
-//    @Override
-//    public void updateUserStatus(int id, String status) {
-//        status = status.toUpperCase();
-//        userValidator.validateId(id);
-//        userValidator.validateStatus(status);
-//        userDao.updateUserStatus(id, status);
-//    }
-//
-//    @Override
-//    public void updateUserRole(int id, String role) {
-//        role = role.toUpperCase();
-//        userValidator.validateId(id);
-//        userValidator.validateRole(role);
-//        userDao.updateUserRole(id, role);
-//    }
-//
-//    @Override
-//    public List<User> findAllTraders() {
-//        return userDao.findAllTraders();
-//    }
+    @Override
+    public User findUserById(int id) {
+        userValidator.validateId(id);
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null);
+    }
+
+    @Transactional
+    @Override
+    public User saveUser(User user) {
+        userValidator.validate(user);
+        user = traderRepository.save(new Trader(user));
+        return user;
+    }
+
+    @Override
+    public String updateUserPassword(int idUser, User user) {
+        userValidator.validateId(idUser);
+        if (user.getPassword() != null) {
+            userValidator.validatePassword(user.getPassword());
+        }
+        User targetUser = userRepository.findById(idUser).get();
+        targetUser.setPassword(user.getPassword());
+        return userRepository.save(targetUser).toString();
+    }
+
+    @Override
+    public String updateUser(User user) {
+        User currentUser = currentUser();
+        if (user.getPassword() != null) {
+            userValidator.validatePassword(user.getPassword());
+            currentUser.setPassword(user.getPassword());
+        }
+        if (user.getFirstName() != null) {
+            userValidator.validateName(user.getFirstName());
+            currentUser.setFirstName(user.getFirstName());
+        }
+        if (user.getLastName() != null) {
+            userValidator.validateName(user.getLastName());
+            currentUser.setLastName(user.getLastName());
+        }
+        return userRepository.save(currentUser).toString();
+    }
+
+    @Override
+    public void destroyUser(int id) {
+        userValidator.validateId(id);
+        userRepository.deleteById(id);
+    }
+
+    @Override
+    public String updateUserStatus(String email, String status) {
+        status = status.toUpperCase();
+        userValidator.validateEmail(email);
+        userValidator.validateStatus(status);
+        User user = userRepository.findUserByEmail(email);
+        user.setStatus(Status.valueOf(status));
+        return userRepository.save(user).toString();
+    }
+
+    @Override
+    public String updateUserRole(int id, String jsonString) {
+        String role = JsonParser.getInfoFromJson(jsonString, "role");
+        role = role.toUpperCase();
+        userValidator.validateId(id);
+        userValidator.validateRole(role);
+        User user = userRepository.findById(id).get();
+        switch (user.getRole().toString()) {
+            case "TRADER" : traderRepository.deleteById(id);
+            case "USER" : ;
+            case "ADMIN" : ;
+        }
+        user.setRole(role);
+        switch (role) {
+            case "TRADER" : {
+                traderRepository.save(new Trader(user));
+            }
+        }
+        return "Successfully";
+    }
 
     @Override
     public User currentUser() {

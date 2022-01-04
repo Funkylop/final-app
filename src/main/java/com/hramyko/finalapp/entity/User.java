@@ -8,7 +8,6 @@ import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "role_")
 @Table(name = "users")
 public class User {
 
@@ -50,6 +49,10 @@ public class User {
         this.createdAt = createdAt;
         this.role = role;
         this.status = status;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Status getStatus() {

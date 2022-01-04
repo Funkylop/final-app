@@ -14,12 +14,12 @@ public class Post {
     int id;
     double price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_game_object")
     GameObject gameObject;
 
-//    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
-//    List<Comment> comments;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Comment> comments;
 
     public Post() {
     }
@@ -27,13 +27,7 @@ public class Post {
     public Post(GameObject gameObject, double price) {
         this.gameObject = gameObject;
         this.price = price;
-//        this.comments = new ArrayList<>();
-    }
-
-    public Post(int id, GameObject gameObject, double price) {
-        this.id = id;
-        this.gameObject = gameObject;
-        this.price = price;
+        this.comments = new ArrayList<>();
     }
 
     public int getId() {
@@ -60,38 +54,38 @@ public class Post {
         this.price = price;
     }
 
-//    public List<Comment> getComments() {
-//        return comments;
-//    }
-//
-//    public void addComment(Comment comment) {
-//        this.comments.add(comment);
-//    }
-//
-//    public void setComments(List<Comment> comments) {
-//        this.comments = comments;
-//    }
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Post post = (Post) o;
-//        return id == post.id && Double.compare(post.price, price) == 0 && Objects.equals(gameObject, post.gameObject) && Objects.equals(comments, post.comments);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, price, gameObject, comments);
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "Post{" +
-//                "id=" + id +
-//                ", price=" + price +
-//                ", gameObject=" + gameObject +
-//                ", comments=" + comments +
-//                '}';
-//    }
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return id == post.id && Double.compare(post.price, price) == 0 && Objects.equals(gameObject, post.gameObject) && Objects.equals(comments, post.comments);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, price, gameObject, comments);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", price=" + price +
+                ", gameObject=" + gameObject +
+                ", comments=" + comments +
+                '}';
+    }
 }

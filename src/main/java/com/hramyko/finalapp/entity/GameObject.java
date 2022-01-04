@@ -2,6 +2,7 @@ package com.hramyko.finalapp.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -15,6 +16,9 @@ public class GameObject {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private Trader trader;
+
+    @OneToOne(mappedBy = "gameObject")
+    private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_game")
@@ -78,6 +82,18 @@ public class GameObject {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Trader getTrader() {
+        return trader;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public String getText() {

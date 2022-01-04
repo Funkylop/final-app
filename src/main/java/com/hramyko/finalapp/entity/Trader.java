@@ -3,15 +3,52 @@ package com.hramyko.finalapp.entity;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "traders")
-@DiscriminatorValue("TRADER")
-@PrimaryKeyJoinColumn(name = "user_id")
 public class Trader extends User{
 
     @OneToMany(mappedBy = "trader")
     private List<GameObject> gameObjects;
+
+    private double rating;
+
+    public Trader() {
+    }
+
+    public Trader(User user) {
+        super(user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(),
+                user.getCreatedAt(), user.getRole(), user.getStatus());
+        this.id = user.getId();
+    }
+
+    public Trader(String email, String password, String firstName,
+                  String lastName, Date createdAt, Role role, Status status, List<GameObject> gameObjects) {
+        super(email, password, firstName, lastName, createdAt, role, status);
+        double rating = 0;
+        int count = 0;
+        for (GameObject gameObject:
+             gameObjects) {
+            List<Comment> comments = gameObject.getPost().getComments();
+            count += comments.size();
+            for (Comment comment:
+                 comments) {
+                rating += comment.getMark();
+            }
+
+        }
+        this.rating = rating/count;
+        this.gameObjects = gameObjects;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
 
     public List<GameObject> getGameObjects() {
         return gameObjects;
@@ -21,13 +58,18 @@ public class Trader extends User{
         this.gameObjects = gameObjects;
     }
 
-    public Trader() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Trader trader = (Trader) o;
+        return Double.compare(trader.rating, rating) == 0 && Objects.equals(gameObjects, trader.gameObjects);
     }
 
-    public Trader(String email, String password, String firstName,
-                  String lastName, Date createdAt, Role role, Status status, List<GameObject> gameObjects) {
-        super(email, password, firstName, lastName, createdAt, role, status);
-        this.gameObjects = gameObjects;
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), gameObjects, rating);
     }
 
     @Override
@@ -39,6 +81,7 @@ public class Trader extends User{
                 ", lastName='" + lastName + '\'' +
                 ", createdAt=" + createdAt +
                 ", role=" + role +
+                ", rating=" + rating +
                 '}';
     }
 }
