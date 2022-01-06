@@ -8,6 +8,7 @@ import com.hramyko.finalapp.service.parser.JsonParser;
 import com.hramyko.finalapp.service.validator.GameObjectValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -26,16 +27,19 @@ public class GameObjectServiceImpl implements GameObjectService {
         this.userService = userService;
     }
 
+    @Transactional
     @Override
     public List<GameObject> findAllGameObjects() {
         return gameObjectRepository.findAll();
     }
 
+    @Transactional
     @Override
     public List<GameObject> findAllUserGameObjects(int id) {
         return gameObjectRepository.findAllByUserId(id);
     }
 
+    @Transactional
     @Override
     public List<GameObject> findAllGameObjectsOfGame(Integer[] gameIds) {
         List<Integer> ids = new ArrayList<>();
@@ -43,6 +47,7 @@ public class GameObjectServiceImpl implements GameObjectService {
         return gameObjectRepository.findAllByGameIdIn(ids);
     }
 
+    @Transactional
     @Override
     public void saveGameObject(String jsonString) {
         GameObject gameObject = (GameObject) JsonParser.getObjectFromJson(jsonString, GameObject.class.getName());
@@ -51,6 +56,7 @@ public class GameObjectServiceImpl implements GameObjectService {
         } else throw new RuntimeException("Error of saving game object");
     }
 
+    @Transactional
     @Override
     public void updateGameObject(int id, String jsonString) {
         GameObject gameObject = getGameObject(id);
@@ -65,6 +71,7 @@ public class GameObjectServiceImpl implements GameObjectService {
         }
     }
 
+    @Transactional
     @Override
     public void updateGameObjectStatus(int id, String status) {
         GameObject gameObject = getGameObject(id);
@@ -72,6 +79,7 @@ public class GameObjectServiceImpl implements GameObjectService {
         gameObjectRepository.save(gameObject);
     }
 
+    @Transactional
     @Override
     public void destroyGameObject(int id, int idUser) {
         GameObject gameObject = getGameObject(id);
@@ -80,6 +88,7 @@ public class GameObjectServiceImpl implements GameObjectService {
         }
     }
 
+    @Transactional
     @Override
     public boolean isOwner(int idUser, GameObject gameObject) {
         if (gameObject.getUser().getId() != idUser) {

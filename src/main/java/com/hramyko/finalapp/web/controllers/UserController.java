@@ -8,17 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 @RestController
 @RequestMapping("api/users")
 public class UserController {
 
     private final UserService userService;
-    @Autowired
-    private TraderService traderService;
+    private final TraderService traderService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, TraderService traderService) {
         this.userService = userService;
+        this.traderService = traderService;
     }
 
     @GetMapping()
@@ -62,24 +65,24 @@ public class UserController {
     public String updateRole(@PathVariable("id") int id, @RequestBody String jsonString) {
         return userService.updateUserRole(id, jsonString);
     }
-//
-//    @DeleteMapping("my_account")
-//    @PreAuthorize("hasAnyAuthority('user.read', 'user.delete', 'user.write')")
-//    public void delete(HttpServletResponse response) {
-//        userService.destroyUser(userService.currentUser().getId());
-//        try {
-//            response.sendRedirect("/my/logout");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    @GetMapping("rating/{id}")
-//    @PreAuthorize("hasAnyAuthority('user.read', 'user.write', 'user.delete')")
-//    public String showTraderRating(@PathVariable("id") int id) {
-//        User user = userService.findUserById(id);
-//        double rating = userService.getUserRating(user.getId());
-//        return user.toString() + "\n" + "Rating: " + rating;
-//    }
+
+    @DeleteMapping("my_account")
+    @PreAuthorize("hasAnyAuthority('user.read', 'user.delete', 'user.write')")
+    public void delete(HttpServletResponse response) {
+        userService.destroyUser(userService.currentUser().getId());
+        try {
+            response.sendRedirect("/my/logout");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @GetMapping("rating/{id}")
+    @PreAuthorize("hasAnyAuthority('user.read', 'user.write', 'user.delete')")
+    public String showTraderRating(@PathVariable("id") int id) {
+        User user = userService.findUserById(id);
+        double rating = traderService.showTraderRating(user.getId());
+        return user + "\n" + "Rating: " + rating;
+    }
 }
 

@@ -7,6 +7,6 @@ import java.util.List;
 public interface WaitingListService {
     int getUserId(int formId);
     void deleteUserForm(int formId);
-    void addUserForm();
+    void addUserForm(WaitingList waitingList);
     List<WaitingList> findAll();
 }

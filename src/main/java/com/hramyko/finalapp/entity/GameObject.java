@@ -59,6 +59,10 @@ public class GameObject {
         this.updatedAt = updatedAt;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Trader getUser() {
         return trader;
     }
