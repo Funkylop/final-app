@@ -8,5 +8,5 @@ public interface TraderService {
     List<Trader> findAll();
     Trader save(Trader trader);
     List<Trader> getTopTraders();
-    double getUserRating(int id);
+    double showTraderRating(int id);
 }

@@ -1,14 +1,23 @@
 package com.hramyko.finalapp.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity(name = "tokens")
 public class ConfirmationToken {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "confirmation_token")
     private String confirmationToken;
+    @Column(name = "created_at")
     private Date createdAt;
+    @Column(name = "token_type")
     private TokenType tokenType;
+    @Column(name = "email")
     private String email;
 
     public ConfirmationToken() {

@@ -26,20 +26,6 @@ public class Trader extends User{
     public Trader(String email, String password, String firstName,
                   String lastName, Date createdAt, Role role, Status status, List<GameObject> gameObjects) {
         super(email, password, firstName, lastName, createdAt, role, status);
-        double rating = 0;
-        int count = 0;
-        for (GameObject gameObject:
-             gameObjects) {
-            List<Comment> comments = gameObject.getPost().getComments();
-            count += comments.size();
-            for (Comment comment:
-                 comments) {
-                rating += comment.getMark();
-            }
-
-        }
-        this.rating = rating/count;
-        this.gameObjects = gameObjects;
     }
 
     public double getRating() {

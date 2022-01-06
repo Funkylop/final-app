@@ -1,7 +1,5 @@
 package com.hramyko.finalapp.entity;
 
-import org.springframework.security.core.parameters.P;
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
@@ -20,11 +18,11 @@ public class Comment {
     private Date createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_author")
+    @JoinColumn(name = "author_id")
     private User author;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_post")
+    @JoinColumn(name = "post_id")
     private Post post;
 
     public Comment() {
