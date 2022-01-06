@@ -7,6 +7,7 @@ import com.hramyko.finalapp.repository.TraderRepository;
 import com.hramyko.finalapp.service.TraderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
@@ -22,16 +23,19 @@ public class TraderServiceImpl implements TraderService {
         this.traderRepository = traderRepository;
     }
 
+    @Transactional
     @Override
     public List<Trader> findAll() {
         return traderRepository.findAll();
     }
 
+    @Transactional
     @Override
     public Trader save(Trader trader) {
         return traderRepository.save(trader);
     }
 
+    @Transactional
     @Override
     public List<Trader> getTopTraders() {
         List<Trader> traders = traderRepository.findAll();
@@ -39,23 +43,24 @@ public class TraderServiceImpl implements TraderService {
              traders) {
             setTraderRating(trader);
         }
-        traders.sort(Comparator.comparing(Trader::getRating));
+//        traders.sort(Comparator.comparing(Trader::getRating));
         return traders;
     }
 
+    @Transactional
     @Override
     public double showTraderRating(int id) {
         Optional<Trader> traderOptional = traderRepository.findById(id);
         if (traderOptional.isPresent()) {
             setTraderRating(traderOptional.get());
-            return traderOptional.get().getRating();
-        } else
-        {
+//            return traderOptional.get().getRating();
+        } else {
             throw new RuntimeException("This user isn't a Trader");
         }
+        return 0;
     }
 
-    private void setTraderRating(Trader trader) {
+        private void setTraderRating(Trader trader) {
         double rating = 0;
         List<GameObject> gameObjects = trader.getGameObjects();
         int count = 0;
@@ -69,6 +74,6 @@ public class TraderServiceImpl implements TraderService {
             }
 
         }
-        trader.setRating(rating/count);
+//        trader.setRating(rating/count);
     }
 }

@@ -7,6 +7,7 @@ import com.hramyko.finalapp.repository.ConfirmationTokenRepository;
 import com.hramyko.finalapp.service.ConfirmationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
@@ -18,14 +19,16 @@ public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
         this.confirmationTokenRepository = confirmationTokenRepository;
     }
 
+    @Transactional
     @Override
     public ConfirmationToken findByConfirmationToken(String confirmationToken) {
         return confirmationTokenRepository.findConfirmationTokenByConfirmationToken(confirmationToken);
     }
 
+    @Transactional
     @Override
     public void deleteConfirmationToken(User user, TokenType type) {
-        confirmationTokenRepository.deleteConfirmationTokenByEmailAndTokenType(user.getEmail(), type.toString());
+        confirmationTokenRepository.deleteConfirmationTokenByEmailAndTokenType(user.getEmail(), type);
     }
 
     @Override

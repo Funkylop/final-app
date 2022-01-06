@@ -40,10 +40,10 @@ public class AuthController {
     @PostMapping(value = "/registration")
     public String saveUser(@RequestBody String jsonString) {
         CommonUser user = (CommonUser) JsonParser.getObjectFromJson(jsonString, CommonUser.class.getName());
-        User existingUser;
+        CommonUser existingUser;
         if (user != null) {
             try {
-                existingUser = userService.findUserByEmail(user.getEmail());
+                existingUser = (CommonUser) userService.findUserByEmail(user.getEmail());
             } catch (EmptyResultDataAccessException e) {
                 existingUser = null;
             }

@@ -22,12 +22,12 @@ public class User {
     protected String lastName;
     @DateTimeFormat
     @Column(name = "created_at")
-    protected Date createdAt;
+    protected Date createdAt = new Date();
     @Column(name = "role_")
     @Enumerated(EnumType.STRING)
-    protected Role role;
+    protected Role role = Role.USER;
     @Enumerated(EnumType.STRING)
-    protected Status status;
+    protected Status status = Status.BANNED;
 
     public User() {
     }

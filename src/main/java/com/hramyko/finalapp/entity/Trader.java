@@ -12,7 +12,7 @@ public class Trader extends User{
     @OneToMany(mappedBy = "trader")
     private List<GameObject> gameObjects;
 
-    private double rating;
+//    private double rating;
 
     public Trader() {
     }
@@ -28,13 +28,13 @@ public class Trader extends User{
         super(email, password, firstName, lastName, createdAt, role, status);
     }
 
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
+//    public double getRating() {
+//        return rating;
+//    }
+//
+//    public void setRating(double rating) {
+//        this.rating = rating;
+//    }
 
     public List<GameObject> getGameObjects() {
         return gameObjects;
@@ -50,12 +50,12 @@ public class Trader extends User{
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Trader trader = (Trader) o;
-        return Double.compare(trader.rating, rating) == 0 && Objects.equals(gameObjects, trader.gameObjects);
+        return Objects.equals(gameObjects, trader.gameObjects);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), gameObjects, rating);
+        return Objects.hash(super.hashCode(), gameObjects);
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Trader extends User{
                 ", lastName='" + lastName + '\'' +
                 ", createdAt=" + createdAt +
                 ", role=" + role +
-                ", rating=" + rating +
+//                ", rating=" + rating +
                 '}';
     }
 }

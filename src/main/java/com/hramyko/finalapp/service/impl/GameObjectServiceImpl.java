@@ -36,7 +36,7 @@ public class GameObjectServiceImpl implements GameObjectService {
     @Transactional
     @Override
     public List<GameObject> findAllUserGameObjects(int id) {
-        return gameObjectRepository.findAllByUserId(id);
+        return gameObjectRepository.findAllByTrader(id);
     }
 
     @Transactional

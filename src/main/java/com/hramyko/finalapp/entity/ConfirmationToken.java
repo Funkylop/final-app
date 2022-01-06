@@ -16,6 +16,7 @@ public class ConfirmationToken {
     @Column(name = "created_at")
     private Date createdAt;
     @Column(name = "token_type")
+    @Enumerated(EnumType.STRING)
     private TokenType tokenType;
     @Column(name = "email")
     private String email;

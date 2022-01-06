@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EmailSenderServiceImpl {
@@ -20,6 +21,7 @@ public class EmailSenderServiceImpl {
         this.confirmationTokenService = confirmationTokenService;
     }
 
+    @Transactional
     public void registrationConfirmationMessage(String email) {
         String confirmationUrl = "http://localhost:8080/registration/confirm/";
         String message = "Hello! To register on our website, please, redirect to the following url: ";
@@ -28,6 +30,7 @@ public class EmailSenderServiceImpl {
         javaMailSender.send(mail);
     }
 
+    @Transactional
     public void resetPasswordMessage(String email) {
         String confirmationUrl = "http://localhost:8080/auth/reset/";
         String message = "Hello! To reset your password, please, redirect to the following url: ";
@@ -36,6 +39,7 @@ public class EmailSenderServiceImpl {
         javaMailSender.send(mail);
     }
 
+    @Transactional
     public void notifyMessage(String email) {
         String message = "Hello! You has been updated to trader!";
         SimpleMailMessage mail = generateMail(email, "Account role",

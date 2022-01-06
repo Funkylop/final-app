@@ -7,6 +7,7 @@ import com.hramyko.finalapp.service.parser.JsonParser;
 import com.hramyko.finalapp.service.validator.CommentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,16 +24,19 @@ public class CommentServiceImpl implements CommentService {
         this.commentValidator = commentValidator;
     }
 
+    @Transactional
     @Override
     public List<Comment> findAllCommentsOfUser(int id) {
         return commentRepository.findCommentsByAuthorId(id);
     }
 
+    @Transactional
     @Override
     public List<Comment> findAllCommentsOfPost(int idPost) {
         return commentRepository.findCommentsByPostId(idPost);
     }
 
+    @Transactional
     @Override
     public Comment findComment(int id) {
         Optional<Comment> optionalComment = commentRepository.findById(id);
@@ -41,6 +45,7 @@ public class CommentServiceImpl implements CommentService {
         } else throw new RuntimeException("Comment with such id doesn't exist");
     }
 
+    @Transactional
     @Override
     public void saveComment(String jsonString) {
         Comment comment = (Comment) JsonParser.getObjectFromJson(jsonString, Comment.class.getName());
@@ -51,6 +56,7 @@ public class CommentServiceImpl implements CommentService {
         } else throw new RuntimeException("Error of saving comment");
     }
 
+    @Transactional
     @Override
     public void updateComment(int id, String jsonString) {
         Comment newComment = (Comment) JsonParser.getObjectFromJson(jsonString, Comment.class.getName());
@@ -71,6 +77,7 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(comment);
     }
 
+    @Transactional
     @Override
     public void approveComment(int id) {
         Optional<Comment> comment = commentRepository.findById(id);
@@ -80,11 +87,13 @@ public class CommentServiceImpl implements CommentService {
         } else throw new RuntimeException("Comment with such id doesn't exist");
     }
 
+    @Transactional
     @Override
     public void destroyComment(int id) {
         commentRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public List<Comment> findAllUnapprovedComments() {
         return commentRepository.findCommentsByApprovedFalse();

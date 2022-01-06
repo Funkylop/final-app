@@ -9,6 +9,7 @@ import com.hramyko.finalapp.service.parser.JsonParser;
 import com.hramyko.finalapp.service.validator.PostValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,17 +29,20 @@ public class PostServiceImpl implements PostService {
         this.gameObjectService = gameObjectService;
     }
 
+    @Transactional
     @Override
     public List<Post> findUserPosts(int idUser) {
         List<GameObject> gameObjects = gameObjectService.findAllUserGameObjects(idUser);
         return postRepository.findAllByGameObjectIn(gameObjects);
     }
 
+    @Transactional
     @Override
     public List<Post> findAllPosts() {
         return postRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void createPost(String jsonString) {
         Post post = (Post) JsonParser.getObjectFromJson(jsonString, Post.class.getName());
@@ -48,6 +52,7 @@ public class PostServiceImpl implements PostService {
         } else throw new RuntimeException("Error of saving post");
     }
 
+    @Transactional
     @Override
     public void deletePost(int id, int idUser) {
         if (isOwner(idUser, id)) {
@@ -55,6 +60,7 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    @Transactional
     @Override
     public void updatePost(int id, String jsonString, int idUser) {
         if (isOwner(idUser, id)) {
@@ -62,18 +68,13 @@ public class PostServiceImpl implements PostService {
         }
     }
 
-    private boolean isOwner(int idUser, int id) {
-        Post post = getPostFromOptional(id);
-        if (post.getGameObject().getUser().getId() == idUser) {
-            return true;
-        } else throw new RuntimeException("You aren't owner of this post");
-    }
-
+    @Transactional
     @Override
     public void deletePost(int id) {
         postRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public void updatePost(int id, String jsonString) {
         Post newPost = (Post) JsonParser.getObjectFromJson(jsonString, Post.class.getName());
@@ -90,5 +91,12 @@ public class PostServiceImpl implements PostService {
         if (optionalPost.isPresent()) {
             return optionalPost.get();
         } else throw new RuntimeException("Post with such id doesn't exist");
+    }
+
+    private boolean isOwner(int idUser, int id) {
+        Post post = getPostFromOptional(id);
+        if (post.getGameObject().getUser().getId() == idUser) {
+            return true;
+        } else throw new RuntimeException("You aren't owner of this post");
     }
 }

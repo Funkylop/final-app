@@ -37,7 +37,7 @@ public class UserController {
     @PreAuthorize("hasAnyAuthority('user.read', 'user.write', 'user.delete')")
     @GetMapping("my_account")
     public String show() {
-        return userService.currentUser().toString();
+        return userService.getCurrentUser();
     }
 
     @GetMapping("{id}")

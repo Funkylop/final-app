@@ -7,6 +7,7 @@ import com.hramyko.finalapp.service.parser.JsonParser;
 import com.hramyko.finalapp.service.validator.GameValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,11 +24,13 @@ public class GameServiceImpl implements GameService {
         this.gameValidator = gameValidator;
     }
 
+    @Transactional
     @Override
     public List<Game> findGames() {
         return gameRepository.findAll();
     }
 
+    @Transactional
     @Override
     public Game findGameById(int id) {
         Optional<Game> game = gameRepository.findById(id);
@@ -36,6 +39,7 @@ public class GameServiceImpl implements GameService {
         } else throw new RuntimeException("Game with such id doesn't exists");
     }
 
+    @Transactional
     @Override
     public void saveGame(String jsonString) {
         Game game = (Game) JsonParser.getObjectFromJson(jsonString, Game.class.getName());
@@ -45,6 +49,7 @@ public class GameServiceImpl implements GameService {
         } else throw new RuntimeException("Error of saving");
     }
 
+    @Transactional
     @Override
     public void updateGame(int id, String jsonString) {
         Optional<Game> optionalGame = gameRepository.findById(id);
@@ -60,6 +65,7 @@ public class GameServiceImpl implements GameService {
         } else throw new RuntimeException("Error of updating");
     }
 
+    @Transactional
     @Override
     public void destroyGame(int id) {
         gameRepository.deleteById(id);

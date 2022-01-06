@@ -11,6 +11,7 @@ import com.hramyko.finalapp.service.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService {
         return traders.get(0).getGameObjects().toString();
     }
 
+    @Transactional
     @Override
     public User findUserById(int id) {
         userValidator.validateId(id);
@@ -55,10 +57,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         userValidator.validate(user);
+        String encodedPassword = getEncodedPassword(user.getPassword());
+        user.setPassword(encodedPassword);
         user = traderRepository.save(new Trader(user));
         return user;
     }
 
+    @Transactional
     @Override
     public String updateUserPassword(int idUser, User user) {
         userValidator.validateId(idUser);
@@ -70,6 +75,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(targetUser).toString();
     }
 
+    @Transactional
     @Override
     public String updateUser(User user) {
         User currentUser = currentUser();
@@ -88,12 +94,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(currentUser).toString();
     }
 
+    @Transactional
     @Override
     public void destroyUser(int id) {
         userValidator.validateId(id);
         userRepository.deleteById(id);
     }
 
+    @Transactional
     @Override
     public String updateUserStatus(String email, String status) {
         status = status.toUpperCase();
@@ -104,6 +112,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user).toString();
     }
 
+    @Transactional
     @Override
     public String updateUserRole(int id, String jsonString) {
         String role = JsonParser.getInfoFromJson(jsonString, "role");
@@ -125,6 +134,7 @@ public class UserServiceImpl implements UserService {
         return "Successfully";
     }
 
+    @Transactional
     @Override
     public User currentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -137,12 +147,20 @@ public class UserServiceImpl implements UserService {
         return userRepository.findUserByEmail(username);
     }
 
+    @Transactional
+    @Override
+    public String getCurrentUser() {
+        return currentUser().toString();
+    }
+
+    @Transactional
     @Override
     public User findUserByEmail(String email) {
         userValidator.validateEmail(email);
         return userRepository.findUserByEmail(email);
     }
 //
+//    @Transactional
 //    @Override
 //    public double getUserRating(int id) {
 //        double rating = 0;
@@ -157,6 +175,7 @@ public class UserServiceImpl implements UserService {
 //        }
 //    }
 //
+//    @Transactional
 //    @Override
 //    public Map<User, Double> getTopTraders() {
 //        Map<User, Double> traderRating = userDao.getTopTraders();
@@ -170,4 +189,10 @@ public class UserServiceImpl implements UserService {
 //                                LinkedHashMap::new));
 //        return traderRating;
 //    }
+
+
+    private String getEncodedPassword(String password)
+    {
+        return new BCryptPasswordEncoder(12).encode(password);
+    }
 }
