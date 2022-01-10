@@ -1,5 +1,6 @@
 package com.hramyko.finalapp.web.controllers;
 
+import com.hramyko.finalapp.entity.User;
 import com.hramyko.finalapp.entity.WaitingList;
 import com.hramyko.finalapp.service.impl.EmailSenderServiceImpl;
 import com.hramyko.finalapp.service.UserService;
@@ -38,11 +39,11 @@ public class WaitingListController {
 
     @PostMapping("{id}")
     @PreAuthorize("hasAuthority('user.delete')")
-    public String applyForm(@PathVariable("id") int formId) {
-        int userId = waitingListService.getUserId(formId);
-        userService.updateUserRole(userId, "TRADER");
-        waitingListService.deleteUserForm(formId);
-        emailSenderServiceImpl.notifyMessage(userService.findUserById(userId).getEmail());
+    public String applyForm(@PathVariable("id") int formId, @RequestBody String jsonString) {
+        User user = userService.findUserById(waitingListService.getUserId(formId));
+        if (user == null) throw new RuntimeException("Error in apply form");
+        userService.updateUserRole(user.getId(), jsonString);
+        emailSenderServiceImpl.notifyMessage(user);
         return "User has been added to traders";
     }
 

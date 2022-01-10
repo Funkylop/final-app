@@ -48,10 +48,11 @@ public class AuthController {
                 existingUser = null;
             }
             if (existingUser == null) {
+                user.setStatus(Status.valueOf("BANNED"));
                 commonUserService.save(user);
-                emailSenderServiceImpl.registrationConfirmationMessage(user.getEmail());
+                emailSenderServiceImpl.registrationConfirmationMessage(user);
             } else if (existingUser.getStatus().equals(Status.BANNED)) {
-                emailSenderServiceImpl.registrationConfirmationMessage(user.getEmail());
+                emailSenderServiceImpl.registrationConfirmationMessage(user);
             } else {
                 return "Such user already exists";
             }
@@ -64,8 +65,8 @@ public class AuthController {
     @PostMapping("/auth/forgot_password")
     public String forgotPassword(@RequestBody String json) {
         String email = JsonParser.getInfoFromJson(json, "email");
-        userService.findUserByEmail(email);
-        emailSenderServiceImpl.resetPasswordMessage(email);
+        User user = userService.findUserByEmail(email);
+        emailSenderServiceImpl.resetPasswordMessage(user);
         return "Please check your email and reset your password!";
     }
 
@@ -74,7 +75,7 @@ public class AuthController {
         ConfirmationToken confirmationToken = confirmationTokenService.findByConfirmationToken(token);
         String password = JsonParser.getInfoFromJson(json, "password");
         if (confirmationToken != null) {
-            User user = userService.findUserByEmail(confirmationToken.getEmail());
+            User user = userService.findUserById(confirmationToken.getUserId());
             user.setPassword(password);
             confirmationTokenService.deleteConfirmationToken(user, confirmationToken.getTokenType());
             userService.updateUserPassword(user.getId(), user);
@@ -86,7 +87,7 @@ public class AuthController {
     public void confirmAccount(@PathVariable("token") String token, HttpServletResponse response) {
         ConfirmationToken confirmationToken = confirmationTokenService.findByConfirmationToken(token);
         if (confirmationToken != null) {
-            User user = userService.findUserByEmail(confirmationToken.getEmail());
+            User user = userService.findUserById(confirmationToken.getUserId());
             confirmationTokenService.deleteConfirmationToken(user, confirmationToken.getTokenType());
             userService.updateUserStatus(user.getEmail(), Status.ACTIVE.toString());
         }

@@ -1,10 +1,10 @@
 package com.hramyko.finalapp.service.impl;
 
-import com.hramyko.finalapp.entity.Status;
-import com.hramyko.finalapp.entity.Trader;
-import com.hramyko.finalapp.entity.User;
-import com.hramyko.finalapp.repository.TraderRepository;
+import com.hramyko.finalapp.entity.*;
+import com.hramyko.finalapp.repository.AdminRepository;
+import com.hramyko.finalapp.repository.CommonUserRepository;
 import com.hramyko.finalapp.repository.UserRepository;
+import com.hramyko.finalapp.service.TraderService;
 import com.hramyko.finalapp.service.UserService;
 import com.hramyko.finalapp.service.parser.JsonParser;
 import com.hramyko.finalapp.service.validator.UserValidator;
@@ -22,14 +22,19 @@ public class UserServiceImpl implements UserService {
 
     private final UserValidator userValidator;
     private final UserRepository userRepository;
-    private final TraderRepository traderRepository;
+    private final TraderService traderService;
+    private final CommonUserRepository commonUserService;
+    private final AdminRepository adminService;
 
     @Autowired
-    public UserServiceImpl(UserValidator userValidator, TraderRepository traderRepository,
-                           UserRepository userRepository) {
+    public UserServiceImpl(UserValidator userValidator, TraderService traderService,
+                           UserRepository userRepository, CommonUserRepository commonUserRepository,
+                           AdminRepository adminRepository) {
         this.userValidator = userValidator;
         this.userRepository = userRepository;
-        this.traderRepository = traderRepository;
+        this.traderService = traderService;
+        this.commonUserService = commonUserRepository;
+        this.adminService = adminRepository;
     }
 
     @Override
@@ -41,7 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public String findAllTraders() {
-        List<Trader> traders = traderRepository.findAll();
+        List<Trader> traders = traderService.findAll();
         return traders.get(0).getGameObjects().toString();
     }
 
@@ -59,7 +64,7 @@ public class UserServiceImpl implements UserService {
         userValidator.validate(user);
         String encodedPassword = getEncodedPassword(user.getPassword());
         user.setPassword(encodedPassword);
-        user = traderRepository.save(new Trader(user));
+        user = traderService.save(new Trader(user));
         return user;
     }
 
@@ -120,16 +125,14 @@ public class UserServiceImpl implements UserService {
         userValidator.validateId(id);
         userValidator.validateRole(role);
         User user = userRepository.findById(id).get();
-        switch (user.getRole().toString()) {
-            case "TRADER" : traderRepository.deleteById(id);
-            case "USER" : ;
-            case "ADMIN" : ;
-        }
+        userRepository.deleteById(id);
         user.setRole(role);
-        switch (role) {
-            case "TRADER" : {
-                traderRepository.save(new Trader(user));
-            }
+        if ("TRADER".equals(role)) {
+            traderService.save(new Trader(user));
+        } else if ("USER".equals(role)) {
+            commonUserService.save(new CommonUser(user));
+        } else if ("ADMIN".equals(role)) {
+            adminService.save(new Admin(user));
         }
         return "Successfully";
     }

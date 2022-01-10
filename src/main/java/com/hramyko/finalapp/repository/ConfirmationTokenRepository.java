@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ConfirmationTokenRepository extends JpaRepository<ConfirmationToken, Integer> {
     ConfirmationToken findConfirmationTokenByConfirmationToken(String token);
-    void deleteConfirmationTokenByEmailAndTokenType(String email, TokenType tokenType);
+    void deleteConfirmationTokenByUserIdAndTokenType(int userId, TokenType tokenType);
 }

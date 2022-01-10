@@ -28,7 +28,7 @@ public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
     @Transactional
     @Override
     public void deleteConfirmationToken(User user, TokenType type) {
-        confirmationTokenRepository.deleteConfirmationTokenByEmailAndTokenType(user.getEmail(), type);
+        confirmationTokenRepository.deleteConfirmationTokenByUserIdAndTokenType(user.getId(), type);
     }
 
     @Override

@@ -18,21 +18,21 @@ public class ConfirmationToken {
     @Column(name = "token_type")
     @Enumerated(EnumType.STRING)
     private TokenType tokenType;
-    @Column(name = "email")
-    private String email;
+    @Column(name = "user_id")
+    private int userId;
 
     public ConfirmationToken() {
     }
 
-    public ConfirmationToken(String email, TokenType tokenType) {
+    public ConfirmationToken(int userId, TokenType tokenType) {
         this.confirmationToken = UUID.randomUUID().toString();
-        this.email = email;
+        this.userId = userId;
         this.tokenType = tokenType;
     }
 
-    public ConfirmationToken(String confirmationToken, String email, Date date, TokenType tokenType) {
+    public ConfirmationToken(String confirmationToken, int userId, Date date, TokenType tokenType) {
         this.confirmationToken = confirmationToken;
-        this.email = email;
+        this.userId = userId;
         this.createdAt = date;
         this.tokenType = tokenType;
     }
@@ -45,12 +45,12 @@ public class ConfirmationToken {
         this.confirmationToken = confirmationToken;
     }
 
-    public String getEmail() {
-        return email;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public Date getCreatedAt() {
@@ -74,12 +74,12 @@ public class ConfirmationToken {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ConfirmationToken that = (ConfirmationToken) o;
-        return confirmationToken.equals(that.confirmationToken) && Objects.equals(createdAt, that.createdAt) && tokenType == that.tokenType && email.equals(that.email);
+        return confirmationToken.equals(that.confirmationToken) && Objects.equals(createdAt, that.createdAt) && tokenType == that.tokenType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(confirmationToken, createdAt, tokenType, email);
+        return Objects.hash(confirmationToken, createdAt, tokenType);
     }
 
     @Override
@@ -88,7 +88,6 @@ public class ConfirmationToken {
                 "confirmationToken='" + confirmationToken + '\'' +
                 ", createdAt=" + createdAt +
                 ", tokenType=" + tokenType +
-                ", email='" + email + '\'' +
                 '}';
     }
 }

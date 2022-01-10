@@ -20,7 +20,6 @@ public class Trader extends User{
     public Trader(User user) {
         super(user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(),
                 user.getCreatedAt(), user.getRole(), user.getStatus());
-        this.id = user.getId();
     }
 
     public Trader(String email, String password, String firstName,

@@ -22,7 +22,7 @@ public interface UserService {
     String findAllTraders();
 
     String updateUserStatus(String email, String status);
-    String updateUserRole(int id, String role);
+    String updateUserRole(int id, String jsonString);
     User currentUser();
     String updateUserPassword(int idUser, User user);
 }

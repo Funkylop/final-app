@@ -20,7 +20,6 @@ public class CommonUser extends User {
     public CommonUser(User user) {
         super(user.getEmail(), user.getPassword(), user.getFirstName(), user.getLastName(),
                 user.getCreatedAt(), user.getRole(), user.getStatus());
-        this.id = user.getId();
     }
 
     public CommonUser(String email, String password, String firstName,

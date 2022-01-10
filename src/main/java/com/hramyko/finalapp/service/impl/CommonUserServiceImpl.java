@@ -1,9 +1,7 @@
 package com.hramyko.finalapp.service.impl;
 
 import com.hramyko.finalapp.entity.CommonUser;
-import com.hramyko.finalapp.entity.User;
 import com.hramyko.finalapp.repository.CommonUserRepository;
-import com.hramyko.finalapp.service.CommonUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class CommonUserServiceImpl implements CommonUserService {
+public class CommonUserServiceImpl implements com.hramyko.finalapp.service.CommonUserService {
 
     private final CommonUserRepository commonUserRepository;
 
@@ -22,7 +20,6 @@ public class CommonUserServiceImpl implements CommonUserService {
         this.commonUserRepository = commonUserRepository;
     }
 
-    @Transactional
     @Override
     public List<CommonUser> findAll() {
         return commonUserRepository.findAll();
@@ -31,8 +28,10 @@ public class CommonUserServiceImpl implements CommonUserService {
     @Transactional
     @Override
     public CommonUser save(CommonUser commonUser) {
-        String encodedPassword = getEncodedPassword(commonUser.getPassword());
-        commonUser.setPassword(encodedPassword);
+        if ("BANNED".equals(commonUser.getStatus().toString())) {
+            String encodedPassword = getEncodedPassword(commonUser.getPassword());
+            commonUser.setPassword(encodedPassword);
+        }
         return commonUserRepository.save(commonUser);
     }
 
