@@ -25,11 +25,16 @@ public class GameObject {
 
     private String title;
     private String text;
-    private GameObjectStatus status;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private GameObjectStatus status = GameObjectStatus.AVAILABLE;
     @Column(name = "created_at")
-    private Date createdAt;
+    private Date createdAt = new Date();
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private Date updatedAt = new Date();
+
+    public GameObject() {
+    }
 
     public GameObject(String title, String text) {
         this.title = title;
@@ -40,9 +45,6 @@ public class GameObject {
         this.title = title;
         this.text = text;
         this.status = status;
-    }
-
-    public GameObject() {
     }
 
     public GameObject(String title,

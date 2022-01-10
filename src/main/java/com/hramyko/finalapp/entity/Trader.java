@@ -66,6 +66,7 @@ public class Trader extends User{
                 ", lastName='" + lastName + '\'' +
                 ", createdAt=" + createdAt +
                 ", role=" + role +
+                ", game objects" + gameObjects +
 //                ", rating=" + rating +
                 '}';
     }

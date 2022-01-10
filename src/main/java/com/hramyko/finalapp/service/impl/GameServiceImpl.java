@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,17 +25,15 @@ public class GameServiceImpl implements GameService {
 
     @Transactional
     @Override
-    public List<Game> findGames() {
-        return gameRepository.findAll();
+    public String findGames() {
+        return gameRepository.findAll().toString();
     }
 
     @Transactional
     @Override
-    public Game findGameById(int id) {
-        Optional<Game> game = gameRepository.findById(id);
-        if (game.isPresent()) {
-            return game.get();
-        } else throw new RuntimeException("Game with such id doesn't exists");
+    public String findGameById(int id) {
+        Optional<Game> optionalGame = gameRepository.findById(id);
+        return getGameFromOptional(optionalGame).toString();
     }
 
     @Transactional
@@ -53,11 +50,8 @@ public class GameServiceImpl implements GameService {
     @Override
     public void updateGame(int id, String jsonString) {
         Optional<Game> optionalGame = gameRepository.findById(id);
-        Game game;
+        Game game = getGameFromOptional(optionalGame);
         Game newGame = (Game) JsonParser.getObjectFromJson(jsonString, Game.class.getName());
-        if (optionalGame.isPresent()) {
-            game = optionalGame.get();
-        } else throw new RuntimeException("Game with such id doesn't exists");
         if(newGame != null) {
             gameValidator.validateTitle(newGame.getTitle());
             game.setTitle(newGame.getTitle());
@@ -69,5 +63,13 @@ public class GameServiceImpl implements GameService {
     @Override
     public void destroyGame(int id) {
         gameRepository.deleteById(id);
+    }
+
+    @Transactional
+    @Override
+    public Game getGameFromOptional(Optional<Game> game) {
+        if (game.isPresent()) {
+            return game.get();
+        } else throw new RuntimeException("No such game");
     }
 }

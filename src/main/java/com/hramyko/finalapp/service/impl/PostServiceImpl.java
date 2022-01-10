@@ -31,15 +31,15 @@ public class PostServiceImpl implements PostService {
 
     @Transactional
     @Override
-    public List<Post> findUserPosts(int idUser) {
+    public String findUserPosts(int idUser) {
         List<GameObject> gameObjects = gameObjectService.findAllUserGameObjects(idUser);
-        return postRepository.findAllByGameObjectIn(gameObjects);
+        return postRepository.findAllByGameObjectIn(gameObjects).toString();
     }
 
     @Transactional
     @Override
-    public List<Post> findAllPosts() {
-        return postRepository.findAll();
+    public String findAllPosts() {
+        return postRepository.findAll().toString();
     }
 
     @Transactional
@@ -64,7 +64,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public void updatePost(int id, String jsonString, int idUser) {
         if (isOwner(idUser, id)) {
-
+            double price = Double.parseDouble(JsonParser.getInfoFromJson(jsonString, "price"));
+            Post post = getPostFromOptional(id);
+            post.setPrice(price);
+            postRepository.save(post);
         }
     }
 
@@ -82,11 +85,15 @@ public class PostServiceImpl implements PostService {
         if (newPost != null) {
             if (newPost.getPrice() != 0) {
                 postValidator.validatePrice(newPost.getPrice());
+                post.setPrice(newPost.getPrice());
+                postRepository.save(post);
             }
         } else throw new RuntimeException("Error of updating post");
     }
 
-    private Post getPostFromOptional(int id) {
+    @Transactional
+    @Override
+    public Post getPostFromOptional(int id) {
         Optional<Post> optionalPost = postRepository.findById(id);
         if (optionalPost.isPresent()) {
             return optionalPost.get();

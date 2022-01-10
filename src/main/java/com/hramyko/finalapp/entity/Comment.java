@@ -15,7 +15,7 @@ public class Comment {
     private boolean approved;
     private int mark;
     @Column(name = "created_at")
-    private Date createdAt;
+    private Date createdAt = new Date();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
@@ -105,9 +105,8 @@ public class Comment {
         return "Comment{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
-                ", approved=" + approved +
-                ", author=" + author +
-                ", post=" + post +
+                ", author=" + author.getEmail() +
+                ", post id=" + post.getId() +
                 ", mark=" + mark +
                 ", createdAt=" + createdAt +
                 '}';

@@ -1,8 +1,11 @@
 package com.hramyko.finalapp.service.impl;
 
 import com.hramyko.finalapp.entity.Comment;
+import com.hramyko.finalapp.entity.User;
 import com.hramyko.finalapp.repository.CommentRepository;
 import com.hramyko.finalapp.service.CommentService;
+import com.hramyko.finalapp.service.PostService;
+import com.hramyko.finalapp.service.UserService;
 import com.hramyko.finalapp.service.parser.JsonParser;
 import com.hramyko.finalapp.service.validator.CommentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,31 +20,36 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final CommentValidator commentValidator;
+    private final UserService userService;
+    private final PostService postService;
 
     @Autowired
-    CommentServiceImpl(CommentRepository commentRepository, CommentValidator commentValidator) {
+    CommentServiceImpl(CommentRepository commentRepository, CommentValidator commentValidator,
+                       UserService userService, PostService postService) {
         this.commentRepository = commentRepository;
         this.commentValidator = commentValidator;
+        this.userService = userService;
+        this.postService = postService;
     }
 
     @Transactional
     @Override
-    public List<Comment> findAllCommentsOfUser(int id) {
-        return commentRepository.findCommentsByAuthorId(id);
+    public String findAllCommentsOfUser(int idUser) {
+        return commentRepository.findCommentsByAuthorAndApprovedTrue(userService.findUserById(idUser)).toString();
     }
 
     @Transactional
     @Override
-    public List<Comment> findAllCommentsOfPost(int idPost) {
-        return commentRepository.findCommentsByPostId(idPost);
+    public String findAllCommentsOfPost(int idPost) {
+        return commentRepository.findCommentsByPostAndApprovedTrue(postService.getPostFromOptional(idPost)).toString();
     }
 
     @Transactional
     @Override
-    public Comment findComment(int id) {
+    public String findComment(int id) {
         Optional<Comment> optionalComment = commentRepository.findById(id);
         if (optionalComment.isPresent()) {
-            return optionalComment.get();
+            return optionalComment.get().toString();
         } else throw new RuntimeException("Comment with such id doesn't exist");
     }
 
@@ -52,6 +60,7 @@ public class CommentServiceImpl implements CommentService {
         if (comment != null) {
             commentValidator.validateMark(comment.getMark());
             commentValidator.validateMessage(comment.getMessage());
+            comment.setAuthor(userService.currentUser());
             commentRepository.save(comment);
         } else throw new RuntimeException("Error of saving comment");
     }
@@ -95,7 +104,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional
     @Override
-    public List<Comment> findAllUnapprovedComments() {
-        return commentRepository.findCommentsByApprovedFalse();
+    public String findAllUnapprovedComments() {
+        return commentRepository.findCommentsByApprovedFalse().toString();
     }
 }

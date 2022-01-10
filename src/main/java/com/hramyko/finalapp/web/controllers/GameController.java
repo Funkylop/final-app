@@ -19,13 +19,13 @@ public class GameController {
     @GetMapping
     @PreAuthorize("hasAnyAuthority('user.read', 'user.write', 'user.delete')")
     public String index() {
-        return gameService.findGames().toString();
+        return gameService.findGames();
     }
 
     @GetMapping("{id}")
     @PreAuthorize("hasAnyAuthority('user.read', 'user.write', 'user.delete')")
     public String show(@PathVariable("id") int id) {
-        return gameService.findGameById(id).toString();
+        return gameService.findGameById(id);
     }
 
     @PostMapping

@@ -18,26 +18,25 @@ public class CommentController {
     @GetMapping("{id}")
     @PreAuthorize("hasAnyAuthority('user.read', 'user.write', 'user.delete')")
     public String showComment(@PathVariable("id") int id) {
-        return commentService.findComment(id).toString();
+        return commentService.findComment(id);
     }
 
     @GetMapping("post/{id}")
     @PreAuthorize("hasAnyAuthority('user.read', 'user.write', 'user.delete')")
     public String showAllCommentsOfPost(@PathVariable("id") int idPost) {
-        return commentService.findAllCommentsOfPost(idPost).toString();
+        return commentService.findAllCommentsOfPost(idPost);
     }
 
     @GetMapping("unapproved")
     @PreAuthorize("hasAuthority('user.delete')")
     public String showAllUnapprovedComments() {
-
-        return commentService.findAllUnapprovedComments().toString();
+        return commentService.findAllUnapprovedComments();
     }
 
     @GetMapping("user/{id}")
     @PreAuthorize("hasAnyAuthority('user.read', 'user.write', 'user.delete')")
     public String showAllCommentsOfUser(@PathVariable("id") int idUser) {
-        return commentService.findAllCommentsOfUser(idUser).toString();
+        return commentService.findAllCommentsOfUser(idUser);
     }
 
     @PostMapping

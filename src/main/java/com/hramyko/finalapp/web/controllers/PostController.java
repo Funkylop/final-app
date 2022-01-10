@@ -28,13 +28,13 @@ public class PostController {
     @GetMapping("my")
     @PreAuthorize("hasAuthority('user.write')")
     public String showMyPosts() {
-        return postService.findUserPosts(userService.currentUser().getId()).toString();
+        return postService.findUserPosts(userService.currentUser().getId());
     }
 
     @GetMapping("{id}")
     @PreAuthorize("hasAnyAuthority('user.read', 'user.write', 'user.delete')")
     public String showUserPosts(@PathVariable("id") int id) {
-        return postService.findUserPosts(id).toString();
+        return postService.findUserPosts(id);
     }
 
     @PostMapping
@@ -48,6 +48,13 @@ public class PostController {
     @PreAuthorize("hasAnyAuthority('user.write', 'user.delete')")
     public String updatePost(@PathVariable("id") int id, @RequestBody String jsonString) {
         postService.updatePost(id, jsonString);
+        return "Post has been updated successfully";
+    }
+
+    @PatchMapping("my/{id}")
+    @PreAuthorize("hasAnyAuthority('user.write')")
+    public String updateTraderPost(@PathVariable("id") int id, @RequestBody String jsonString) {
+        postService.updatePost(id, jsonString, userService.currentUser().getId());
         return "Post has been updated successfully";
     }
 
