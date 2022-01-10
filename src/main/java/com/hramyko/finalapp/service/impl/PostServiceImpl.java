@@ -1,8 +1,8 @@
 package com.hramyko.finalapp.service.impl;
 
-import com.hramyko.finalapp.entity.GameObject;
-import com.hramyko.finalapp.entity.Post;
-import com.hramyko.finalapp.repository.PostRepository;
+import com.hramyko.finalapp.persistence.entity.GameObject;
+import com.hramyko.finalapp.persistence.entity.Post;
+import com.hramyko.finalapp.persistence.repository.PostRepository;
 import com.hramyko.finalapp.service.GameObjectService;
 import com.hramyko.finalapp.service.PostService;
 import com.hramyko.finalapp.service.parser.JsonParser;

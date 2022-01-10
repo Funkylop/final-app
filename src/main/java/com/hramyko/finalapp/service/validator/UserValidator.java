@@ -1,8 +1,8 @@
 package com.hramyko.finalapp.service.validator;
 
-import com.hramyko.finalapp.entity.Role;
-import com.hramyko.finalapp.entity.Status;
-import com.hramyko.finalapp.entity.User;
+import com.hramyko.finalapp.persistence.entity.Role;
+import com.hramyko.finalapp.persistence.entity.Status;
+import com.hramyko.finalapp.persistence.entity.User;
 import com.hramyko.finalapp.service.util.ErrorMessage;
 import com.hramyko.finalapp.service.util.ValidValue;
 import org.apache.commons.lang.StringUtils;

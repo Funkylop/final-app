@@ -1,9 +1,7 @@
 package com.hramyko.finalapp.service;
 
-import com.hramyko.finalapp.entity.Post;
+import com.hramyko.finalapp.persistence.entity.Post;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 public interface PostService {
     String findUserPosts(int idUser);

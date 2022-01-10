@@ -1,6 +1,6 @@
-package com.hramyko.finalapp.repository;
+package com.hramyko.finalapp.persistence.repository;
 
-import com.hramyko.finalapp.entity.User;
+import com.hramyko.finalapp.persistence.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

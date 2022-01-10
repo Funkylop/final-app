@@ -1,7 +1,7 @@
 package com.hramyko.finalapp.service.impl;
 
-import com.hramyko.finalapp.entity.CommonUser;
-import com.hramyko.finalapp.repository.CommonUserRepository;
+import com.hramyko.finalapp.persistence.entity.CommonUser;
+import com.hramyko.finalapp.persistence.repository.CommonUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

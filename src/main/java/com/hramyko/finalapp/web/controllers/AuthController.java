@@ -1,9 +1,9 @@
 package com.hramyko.finalapp.web.controllers;
 
-import com.hramyko.finalapp.entity.CommonUser;
-import com.hramyko.finalapp.entity.ConfirmationToken;
-import com.hramyko.finalapp.entity.Status;
-import com.hramyko.finalapp.entity.User;
+import com.hramyko.finalapp.persistence.entity.CommonUser;
+import com.hramyko.finalapp.persistence.entity.ConfirmationToken;
+import com.hramyko.finalapp.persistence.entity.Status;
+import com.hramyko.finalapp.persistence.entity.User;
 import com.hramyko.finalapp.service.CommonUserService;
 import com.hramyko.finalapp.service.ConfirmationTokenService;
 import com.hramyko.finalapp.service.UserService;

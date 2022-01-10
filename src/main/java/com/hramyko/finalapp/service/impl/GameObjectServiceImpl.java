@@ -1,12 +1,10 @@
 package com.hramyko.finalapp.service.impl;
 
-import com.hramyko.finalapp.entity.Game;
-import com.hramyko.finalapp.entity.GameObject;
-import com.hramyko.finalapp.entity.Trader;
-import com.hramyko.finalapp.repository.GameObjectRepository;
-import com.hramyko.finalapp.repository.GameRepository;
+import com.hramyko.finalapp.persistence.entity.GameObject;
+import com.hramyko.finalapp.persistence.entity.Trader;
+import com.hramyko.finalapp.persistence.repository.GameObjectRepository;
+import com.hramyko.finalapp.persistence.repository.GameRepository;
 import com.hramyko.finalapp.service.GameObjectService;
-import com.hramyko.finalapp.service.GameService;
 import com.hramyko.finalapp.service.UserService;
 import com.hramyko.finalapp.service.parser.JsonParser;
 import com.hramyko.finalapp.service.validator.GameObjectValidator;

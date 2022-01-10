@@ -1,7 +1,7 @@
-package com.hramyko.finalapp.repository;
+package com.hramyko.finalapp.persistence.repository;
 
-import com.hramyko.finalapp.entity.GameObject;
-import com.hramyko.finalapp.entity.Post;
+import com.hramyko.finalapp.persistence.entity.GameObject;
+import com.hramyko.finalapp.persistence.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

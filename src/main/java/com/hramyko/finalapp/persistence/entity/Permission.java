@@ -1,4 +1,4 @@
-package com.hramyko.finalapp.entity;
+package com.hramyko.finalapp.persistence.entity;
 
 public enum Permission {
     USER_READ("user.read"),

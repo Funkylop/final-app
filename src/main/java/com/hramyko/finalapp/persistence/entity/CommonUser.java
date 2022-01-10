@@ -1,4 +1,4 @@
-package com.hramyko.finalapp.entity;
+package com.hramyko.finalapp.persistence.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;

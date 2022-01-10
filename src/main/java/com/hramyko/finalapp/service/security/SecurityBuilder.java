@@ -1,7 +1,7 @@
 package com.hramyko.finalapp.service.security;
 
-import com.hramyko.finalapp.entity.Status;
-import com.hramyko.finalapp.entity.User;
+import com.hramyko.finalapp.persistence.entity.Status;
+import com.hramyko.finalapp.persistence.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

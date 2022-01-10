@@ -1,7 +1,7 @@
 package com.hramyko.finalapp.web.controllers;
 
-import com.hramyko.finalapp.entity.User;
-import com.hramyko.finalapp.entity.WaitingList;
+import com.hramyko.finalapp.persistence.entity.User;
+import com.hramyko.finalapp.persistence.entity.WaitingList;
 import com.hramyko.finalapp.service.impl.EmailSenderServiceImpl;
 import com.hramyko.finalapp.service.UserService;
 import com.hramyko.finalapp.service.WaitingListService;

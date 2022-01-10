@@ -1,4 +1,4 @@
-package com.hramyko.finalapp.entity;
+package com.hramyko.finalapp.persistence.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;

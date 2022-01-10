@@ -1,6 +1,6 @@
 package com.hramyko.finalapp.service;
 
-import com.hramyko.finalapp.entity.Admin;
+import com.hramyko.finalapp.persistence.entity.Admin;
 
 import java.util.List;
 

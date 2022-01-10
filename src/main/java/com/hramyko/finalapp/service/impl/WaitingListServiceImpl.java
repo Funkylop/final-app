@@ -1,7 +1,7 @@
 package com.hramyko.finalapp.service.impl;
 
-import com.hramyko.finalapp.entity.WaitingList;
-import com.hramyko.finalapp.repository.WaitingListRepository;
+import com.hramyko.finalapp.persistence.entity.WaitingList;
+import com.hramyko.finalapp.persistence.repository.WaitingListRepository;
 import com.hramyko.finalapp.service.WaitingListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

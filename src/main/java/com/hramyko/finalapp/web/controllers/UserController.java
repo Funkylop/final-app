@@ -1,6 +1,6 @@
 package com.hramyko.finalapp.web.controllers;
 
-import com.hramyko.finalapp.entity.User;
+import com.hramyko.finalapp.persistence.entity.User;
 import com.hramyko.finalapp.service.TraderService;
 import com.hramyko.finalapp.service.UserService;
 import com.hramyko.finalapp.service.parser.JsonParser;
@@ -29,6 +29,7 @@ public class UserController {
     public String index() {
         return userService.findAll();
     }
+
     @GetMapping("rating")
     public String showTop() {
         return traderService.getTopTraders().toString();
@@ -51,7 +52,8 @@ public class UserController {
     public String showAllTraders() {
         return userService.findAllTraders();
     }
-//
+
+    //
     @PatchMapping("my_account")
     @PreAuthorize("hasAnyAuthority('user.read', 'user.write', 'user.delete')")
     public String update(@RequestBody String jsonString) {
@@ -85,4 +87,3 @@ public class UserController {
         return user + "\n" + "Rating: " + rating;
     }
 }
-

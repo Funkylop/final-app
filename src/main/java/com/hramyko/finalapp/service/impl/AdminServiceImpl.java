@@ -1,7 +1,7 @@
 package com.hramyko.finalapp.service.impl;
 
-import com.hramyko.finalapp.entity.Admin;
-import com.hramyko.finalapp.repository.AdminRepository;
+import com.hramyko.finalapp.persistence.entity.Admin;
+import com.hramyko.finalapp.persistence.repository.AdminRepository;
 import com.hramyko.finalapp.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

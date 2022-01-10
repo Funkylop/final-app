@@ -1,8 +1,8 @@
 package com.hramyko.finalapp.service.impl;
 
-import com.hramyko.finalapp.entity.ConfirmationToken;
-import com.hramyko.finalapp.entity.TokenType;
-import com.hramyko.finalapp.entity.User;
+import com.hramyko.finalapp.persistence.entity.ConfirmationToken;
+import com.hramyko.finalapp.persistence.entity.TokenType;
+import com.hramyko.finalapp.persistence.entity.User;
 import com.hramyko.finalapp.service.ConfirmationTokenService;
 import com.hramyko.finalapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

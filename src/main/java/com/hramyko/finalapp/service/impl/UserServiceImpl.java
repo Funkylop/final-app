@@ -1,9 +1,9 @@
 package com.hramyko.finalapp.service.impl;
 
-import com.hramyko.finalapp.entity.*;
-import com.hramyko.finalapp.repository.AdminRepository;
-import com.hramyko.finalapp.repository.CommonUserRepository;
-import com.hramyko.finalapp.repository.UserRepository;
+import com.hramyko.finalapp.persistence.entity.*;
+import com.hramyko.finalapp.persistence.repository.AdminRepository;
+import com.hramyko.finalapp.persistence.repository.CommonUserRepository;
+import com.hramyko.finalapp.persistence.repository.UserRepository;
 import com.hramyko.finalapp.service.TraderService;
 import com.hramyko.finalapp.service.UserService;
 import com.hramyko.finalapp.service.parser.JsonParser;

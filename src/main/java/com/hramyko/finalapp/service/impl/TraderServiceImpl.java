@@ -1,15 +1,14 @@
 package com.hramyko.finalapp.service.impl;
 
-import com.hramyko.finalapp.entity.Comment;
-import com.hramyko.finalapp.entity.GameObject;
-import com.hramyko.finalapp.entity.Trader;
-import com.hramyko.finalapp.repository.TraderRepository;
+import com.hramyko.finalapp.persistence.entity.Comment;
+import com.hramyko.finalapp.persistence.entity.GameObject;
+import com.hramyko.finalapp.persistence.entity.Trader;
+import com.hramyko.finalapp.persistence.repository.TraderRepository;
 import com.hramyko.finalapp.service.TraderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 

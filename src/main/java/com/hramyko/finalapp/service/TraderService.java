@@ -1,6 +1,6 @@
 package com.hramyko.finalapp.service;
 
-import com.hramyko.finalapp.entity.Trader;
+import com.hramyko.finalapp.persistence.entity.Trader;
 
 import java.util.List;
 

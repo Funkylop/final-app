@@ -1,11 +1,7 @@
 package com.hramyko.finalapp.service;
 
-import com.hramyko.finalapp.entity.Trader;
-import com.hramyko.finalapp.entity.User;
+import com.hramyko.finalapp.persistence.entity.User;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Map;
 
 public interface UserService {
     String findAll();

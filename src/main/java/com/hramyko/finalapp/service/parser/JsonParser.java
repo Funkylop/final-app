@@ -2,16 +2,15 @@ package com.hramyko.finalapp.service.parser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hramyko.finalapp.entity.*;
+import com.hramyko.finalapp.persistence.entity.*;
 
 public class JsonParser {
 
     public static String getInfoFromJson(String jsonString, String target) {
         String[] strings = jsonString.split(",|}");
-        for (String s:
+        for (String s :
                 strings) {
-            if (s.contains(target))
-            {
+            if (s.contains(target)) {
                 jsonString = s;
             }
         }
@@ -36,14 +35,14 @@ public class JsonParser {
     }
 
     private static Object getObject(String name) {
-        switch(name) {
+        switch (name) {
             case "com.hramyko.finalapp.entity.Post":
                 return new Post();
             case "com.hramyko.finalapp.entity.CommonUser":
                 return new CommonUser();
-            case "com.hramyko.finalapp.entity.Admin" :
+            case "com.hramyko.finalapp.entity.Admin":
                 return new Admin();
-            case "com.hramyko.finalapp.entity.Trader" :
+            case "com.hramyko.finalapp.entity.Trader":
                 return new Trader();
             case "com.hramyko.finalapp.entity.GameObject":
                 return new GameObject();

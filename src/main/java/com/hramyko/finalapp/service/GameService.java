@@ -1,8 +1,7 @@
 package com.hramyko.finalapp.service;
 
-import com.hramyko.finalapp.entity.Game;
+import com.hramyko.finalapp.persistence.entity.Game;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface GameService {

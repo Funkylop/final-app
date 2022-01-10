@@ -1,6 +1,5 @@
-package com.hramyko.finalapp.entity;
+package com.hramyko.finalapp.persistence.entity;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 

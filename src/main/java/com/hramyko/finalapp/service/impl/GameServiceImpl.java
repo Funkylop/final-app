@@ -1,7 +1,7 @@
 package com.hramyko.finalapp.service.impl;
 
-import com.hramyko.finalapp.entity.Game;
-import com.hramyko.finalapp.repository.GameRepository;
+import com.hramyko.finalapp.persistence.entity.Game;
+import com.hramyko.finalapp.persistence.repository.GameRepository;
 import com.hramyko.finalapp.service.GameService;
 import com.hramyko.finalapp.service.parser.JsonParser;
 import com.hramyko.finalapp.service.validator.GameValidator;

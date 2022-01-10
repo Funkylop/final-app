@@ -1,6 +1,6 @@
 package com.hramyko.finalapp.service.validator;
 
-import com.hramyko.finalapp.entity.GameObjectStatus;
+import com.hramyko.finalapp.persistence.entity.GameObjectStatus;
 import com.hramyko.finalapp.service.util.ErrorMessage;
 import com.hramyko.finalapp.service.util.ValidValue;
 import org.apache.commons.lang.StringUtils;

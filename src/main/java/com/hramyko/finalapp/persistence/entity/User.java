@@ -1,4 +1,4 @@
-package com.hramyko.finalapp.entity;
+package com.hramyko.finalapp.persistence.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

@@ -1,9 +1,5 @@
 package com.hramyko.finalapp.service;
 
-import com.hramyko.finalapp.entity.Comment;
-
-import java.util.List;
-
 public interface CommentService {
     String findAllCommentsOfUser(int idUser);
     String findAllCommentsOfPost(int idPost);
