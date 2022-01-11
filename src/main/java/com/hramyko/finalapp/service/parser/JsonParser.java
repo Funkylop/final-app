@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hramyko.finalapp.persistence.entity.*;
 
+import java.io.IOException;
+
 public class JsonParser {
 
     public static String getInfoFromJson(String jsonString, String target) {
@@ -28,7 +30,7 @@ public class JsonParser {
         if (object == null) return null;
         try {
             object = objectMapper.readValue(jsonString, object.getClass());
-        } catch (JsonProcessingException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return object;

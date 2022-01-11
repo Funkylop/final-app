@@ -13,21 +13,21 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected int id;
-    protected String email;
-    protected String password;
+    private int id;
+    private String email;
+    private String password;
     @Column(name = "first_name")
-    protected String firstName;
+    private String firstName;
     @Column(name = "last_name")
-    protected String lastName;
+    private String lastName;
     @DateTimeFormat
     @Column(name = "created_at")
-    protected Date createdAt = new Date();
+    private Date createdAt = new Date();
     @Column(name = "role_")
     @Enumerated(EnumType.STRING)
-    protected Role role = Role.USER;
+    private Role role = Role.USER;
     @Enumerated(EnumType.STRING)
-    protected Status status = Status.BANNED;
+    private Status status = Status.BANNED;
 
     public User() {
     }

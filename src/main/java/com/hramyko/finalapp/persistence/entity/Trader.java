@@ -51,12 +51,12 @@ public class Trader extends User{
     @Override
     public String toString() {
         return "Trader{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", createdAt=" + createdAt +
-                ", role=" + role +
+                "id=" + this.getId() +
+                ", email='" + this.getEmail() + '\'' +
+                ", firstName='" + this.getFirstName() + '\'' +
+                ", lastName='" + this.getLastName() + '\'' +
+                ", createdAt=" + this.getCreatedAt() +
+                ", role=" + this.getRole() +
                 ", game objects" + gameObjects +
                 '}';
     }

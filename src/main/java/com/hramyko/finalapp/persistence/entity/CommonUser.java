@@ -53,13 +53,13 @@ public class CommonUser extends User {
     @Override
     public String toString() {
         return "CommonUser{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "id=" + this.getId() +
+                ", email='" + this.getEmail() + '\'' +
+                ", firstName='" + this.getFirstName() + '\'' +
+                ", lastName='" + this.getLastName() + '\'' +
                 ", comments=" + comments +
-                ", createdAt=" + createdAt +
-                ", role=" + role +
+                ", createdAt=" + this.getCreatedAt() +
+                ", role=" + this.getRole() +
                 '}';
     }
 }

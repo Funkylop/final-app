@@ -23,13 +23,13 @@ public class UserValidator {
     }
 
     public void validateEmail(String email) {
-        if (StringUtils.isBlank(email) || !email.matches(EMAIL_PATTERN)) {
+        if (StringUtils.isBlank(email) || !email.matches(EMAIL_PATTERN) && !"admin".equals(email)) {
             parametersError(ErrorMessage.PARAMETER_EMAIL);
         }
     }
 
     public void validatePassword(String password) {
-        if (StringUtils.isBlank(password) || !password.matches(PASSWORD_PATTERN)) {
+        if (StringUtils.isBlank(password) || !password.matches(PASSWORD_PATTERN) || !"admin".equals(password)) {
             parametersError(ErrorMessage.PARAMETER_PASSWORD);
         }
     }
