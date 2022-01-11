@@ -82,8 +82,8 @@ public class UserController {
     @GetMapping("rating/{id}")
     @PreAuthorize("hasAnyAuthority('user.read', 'user.write', 'user.delete')")
     public String showTraderRating(@PathVariable("id") int id) {
-        User user = userService.findUserById(id);
+        User user = userService.getUserFromOptional(id);
         double rating = traderService.showTraderRating(user.getId());
-        return user + "\n" + "Rating: " + rating;
+        return userService.findUserById(id) + "\n" + "Rating: " + rating;
     }
 }

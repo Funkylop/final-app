@@ -75,7 +75,7 @@ public class AuthController {
         ConfirmationToken confirmationToken = confirmationTokenService.findByConfirmationToken(token);
         String password = JsonParser.getInfoFromJson(json, "password");
         if (confirmationToken != null) {
-            User user = userService.findUserById(confirmationToken.getUserId());
+            User user = userService.getUserFromOptional(confirmationToken.getUserId());
             user.setPassword(password);
             confirmationTokenService.deleteConfirmationToken(user, confirmationToken.getTokenType());
             userService.updateUserPassword(user.getId(), user);
@@ -87,7 +87,7 @@ public class AuthController {
     public void confirmAccount(@PathVariable("token") String token, HttpServletResponse response) {
         ConfirmationToken confirmationToken = confirmationTokenService.findByConfirmationToken(token);
         if (confirmationToken != null) {
-            User user = userService.findUserById(confirmationToken.getUserId());
+            User user = userService.getUserFromOptional(confirmationToken.getUserId());
             confirmationTokenService.deleteConfirmationToken(user, confirmationToken.getTokenType());
             userService.updateUserStatus(user.getEmail(), Status.ACTIVE.toString());
         }

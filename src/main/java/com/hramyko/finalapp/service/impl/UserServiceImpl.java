@@ -52,10 +52,9 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public User findUserById(int id) {
+    public String findUserById(int id) {
         userValidator.validateId(id);
-        Optional<User> user = userRepository.findById(id);
-        return user.orElse(null);
+        return getUserFromOptional(id).toString();
     }
 
     @Transactional
@@ -162,37 +161,15 @@ public class UserServiceImpl implements UserService {
         userValidator.validateEmail(email);
         return userRepository.findUserByEmail(email);
     }
-//
-//    @Transactional
-//    @Override
-//    public double getUserRating(int id) {
-//        double rating = 0;
-//        List<Comment> comments = commentDao.findAllUserComments(id);
-//        if (comments.size() > 0) {
-//            for (Comment comment : comments) {
-//                rating += comment.getMark();
-//            }
-//            return rating / comments.size();
-//        } else {
-//            return 0;
-//        }
-//    }
-//
-//    @Transactional
-//    @Override
-//    public Map<User, Double> getTopTraders() {
-//        Map<User, Double> traderRating = userDao.getTopTraders();
-//        traderRating = traderRating.entrySet()
-//                .stream()
-//                .sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
-//                .collect(Collectors
-//                        .toMap(Map.Entry::getKey,
-//                                Map.Entry::getValue,
-//                                (e1, e2) -> e1,
-//                                LinkedHashMap::new));
-//        return traderRating;
-//    }
 
+    @Transactional
+    @Override
+    public User getUserFromOptional(int id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            return userOptional.get();
+        } else throw new RuntimeException("User with such id doesn't exist");
+    }
 
     private String getEncodedPassword(String password)
     {

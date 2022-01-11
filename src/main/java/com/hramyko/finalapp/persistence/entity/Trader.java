@@ -12,7 +12,6 @@ public class Trader extends User{
     @OneToMany(mappedBy = "trader")
     private List<GameObject> gameObjects;
 
-//    private double rating;
 
     public Trader() {
     }
@@ -52,14 +51,13 @@ public class Trader extends User{
     @Override
     public String toString() {
         return "Trader{" +
-                ", id=" + id +
+                "id=" + id +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", createdAt=" + createdAt +
                 ", role=" + role +
                 ", game objects" + gameObjects +
-//                ", rating=" + rating +
                 '}';
     }
 }

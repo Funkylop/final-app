@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface UserService {
     String findAll();
-    User findUserById(int id);
+    String findUserById(int id);
     User saveUser(User user);
     String updateUser(User user);
     void destroyUser(int id);
@@ -21,4 +21,7 @@ public interface UserService {
     String updateUserRole(int id, String jsonString);
     User currentUser();
     String updateUserPassword(int idUser, User user);
+
+    @Transactional
+    User getUserFromOptional(int id);
 }

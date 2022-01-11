@@ -40,7 +40,7 @@ public class WaitingListController {
     @PostMapping("{id}")
     @PreAuthorize("hasAuthority('user.delete')")
     public String applyForm(@PathVariable("id") int formId, @RequestBody String jsonString) {
-        User user = userService.findUserById(waitingListService.getUserId(formId));
+        User user = userService.getUserFromOptional(waitingListService.getUserId(formId));
         if (user == null) throw new RuntimeException("Error in apply form");
         userService.updateUserRole(user.getId(), jsonString);
         emailSenderServiceImpl.notifyMessage(user);

@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public String findAllCommentsOfUser(int idUser) {
-        return commentRepository.findCommentsByAuthorAndApprovedTrue(userService.findUserById(idUser)).toString();
+        return commentRepository.findCommentsByAuthorAndApprovedTrue(userService.getUserFromOptional(idUser)).toString();
     }
 
     @Transactional

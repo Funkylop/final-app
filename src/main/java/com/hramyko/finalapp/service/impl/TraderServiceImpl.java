@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TraderServiceImpl implements TraderService {
@@ -45,7 +42,13 @@ public class TraderServiceImpl implements TraderService {
                 traders) {
             traderRating.put(trader, setTraderRating(trader));
         }
-        return (Map<Trader, Double>) traderRating.entrySet().stream().sorted(Map.Entry.<Trader, Double>comparingByValue().reversed());
+        List<Map.Entry<Trader, Double>> list = new LinkedList<>(traderRating.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+        traderRating = new LinkedHashMap<>();
+        for (Map.Entry<Trader, Double> entry : list) {
+            traderRating.put(entry.getKey(), entry.getValue());
+        }
+        return traderRating;
     }
 
     @Transactional

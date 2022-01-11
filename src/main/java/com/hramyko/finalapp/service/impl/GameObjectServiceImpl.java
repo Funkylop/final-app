@@ -40,7 +40,7 @@ public class GameObjectServiceImpl implements GameObjectService {
     @Transactional
     @Override
     public List<GameObject> findAllUserGameObjects(int id) {
-        Trader trader = (Trader) userService.findUserById(id);
+        Trader trader = (Trader) userService.getUserFromOptional(id);
         return gameObjectRepository.findAllByTrader(trader);
     }
 
