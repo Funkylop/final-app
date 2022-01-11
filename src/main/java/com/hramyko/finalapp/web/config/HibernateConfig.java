@@ -20,9 +20,9 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableJpaRepositories(basePackages="com.hramyko.finalapp.repository")
+@EnableJpaRepositories(basePackages="com.hramyko.finalapp.persistence.repository")
 @PropertySource("classpath:database.properties")
-@EntityScan("com.hramyko.finalapp.entity")
+@EntityScan("com.hramyko.finalapp.persistence.entity.*")
 @EnableTransactionManagement
 public class HibernateConfig {
 
@@ -55,7 +55,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
-        sessionFactory.setPackagesToScan("com.hramyko.finalapp.entity");
+        sessionFactory.setPackagesToScan("com.hramyko.finalapp.persistence.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
@@ -72,7 +72,7 @@ public class HibernateConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan("com.hramyko.finalapp.entity");
+        em.setPackagesToScan("com.hramyko.finalapp.persistence.entity");
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(hibernateProperties());

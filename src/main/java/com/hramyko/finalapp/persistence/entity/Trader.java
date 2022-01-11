@@ -27,14 +27,6 @@ public class Trader extends User{
         super(email, password, firstName, lastName, createdAt, role, status);
     }
 
-//    public double getRating() {
-//        return rating;
-//    }
-//
-//    public void setRating(double rating) {
-//        this.rating = rating;
-//    }
-
     public List<GameObject> getGameObjects() {
         return gameObjects;
     }
