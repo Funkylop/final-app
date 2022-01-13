@@ -5,6 +5,7 @@ import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 
+@PropertySource("classpath:application.properties")
 @Component
 public class JwtTokenProvider {
 
@@ -27,7 +29,7 @@ public class JwtTokenProvider {
     private final UserDetailsService userDetailsService;
 
     @Autowired
-    public JwtTokenProvider(@Value("jwttoken")String secret, @Value("3600000") String validityInMilliseconds, UserDetailsService userDetailsService) {
+    public JwtTokenProvider(@Value("${jwt.token.secret}")String secret, @Value("${jwt.token.expired}") String validityInMilliseconds, UserDetailsService userDetailsService) {
         this.secret = secret;
         this.validityInMilliseconds = Long.parseLong(validityInMilliseconds);
         this.userDetailsService = userDetailsService;
