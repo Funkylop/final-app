@@ -21,7 +21,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableJpaRepositories(basePackages="com.hramyko.finalapp.persistence.repository")
-@PropertySource("classpath:database.properties")
+@PropertySource("classpath:application.properties")
 @EntityScan("com.hramyko.finalapp.persistence.entity.*")
 @EnableTransactionManagement
 public class HibernateConfig {
@@ -31,8 +31,8 @@ public class HibernateConfig {
     private final String password;
     private final String url;
 
-    public HibernateConfig(@Value("${datasource.url}") String url, @Value("${datasource.password}") String password,
-                           @Value("${datasource.username}") String username, @Value("${datasource.driver-class-name}") String driverClassName) {
+    public HibernateConfig(@Value("${url}") String url, @Value("${spring.datasource.password}") String password,
+                           @Value("${spring.datasource.username}") String username, @Value("${spring.datasource.driver-class-name}") String driverClassName) {
         this.url = url;
         this.username = username;
         this.password = password;
